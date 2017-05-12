@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307023910) do
+ActiveRecord::Schema.define(version: 20170512234106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,13 +38,19 @@ ActiveRecord::Schema.define(version: 20170307023910) do
   end
 
   create_table "campaigns", force: :cascade do |t|
-    t.integer  "hook_id",         :foreign_key=>{:references=>"hooks", :name=>"fk_campaigns_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_hook_id", :using=>:btree}
+    t.integer  "hook_id",           :foreign_key=>{:references=>"hooks", :name=>"fk_campaigns_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_hook_id", :using=>:btree}
     t.string   "name"
     t.string   "hook_identifier"
-    t.integer  "app_id",          :foreign_key=>{:references=>"apps", :name=>"fk_campaigns_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_app_id", :using=>:btree}
-    t.integer  "email_list_id",   :foreign_key=>{:references=>"email_lists", :name=>"fk_campaigns_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_email_list_id", :using=>:btree}
-    t.datetime "created_at",      :null=>false
-    t.datetime "updated_at",      :null=>false
+    t.integer  "app_id",            :foreign_key=>{:references=>"apps", :name=>"fk_campaigns_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_app_id", :using=>:btree}
+    t.integer  "email_list_id",     :foreign_key=>{:references=>"email_lists", :name=>"fk_campaigns_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_email_list_id", :using=>:btree}
+    t.datetime "created_at",        :null=>false
+    t.datetime "updated_at",        :null=>false
+    t.string   "description"
+    t.integer  "numTimesTriggered"
+    t.integer  "numEmailsSent"
+    t.integer  "delayTime"
+    t.string   "emailSubject"
+    t.string   "emailContent"
   end
 
   create_table "emails", force: :cascade do |t|
