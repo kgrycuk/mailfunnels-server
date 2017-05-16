@@ -1,5 +1,6 @@
 MailFunnelServer::Application.routes.draw do
 
+  resources :funnel_model
   resources :campaign_product_leads
   resources :job_queues
   resources :campaigns do
@@ -9,6 +10,8 @@ MailFunnelServer::Application.routes.draw do
 	mount API => '/'
 
 	# http://localhost:3001/RESOURCE
+
+	resources :funnel_model
 
 	resources :email_lists do
 		resources :emails
