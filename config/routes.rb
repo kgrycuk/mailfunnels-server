@@ -1,6 +1,6 @@
 MailFunnelServer::Application.routes.draw do
 
-  resources :funnel_model
+  resources :funnels
   resources :campaign_product_leads
   resources :job_queues
   resources :campaigns do
@@ -11,7 +11,7 @@ MailFunnelServer::Application.routes.draw do
 
 	# http://localhost:3001/RESOURCE
 
-	resources :funnel_model
+	resources :funnels
 
 	resources :email_lists do
 		resources :emails
