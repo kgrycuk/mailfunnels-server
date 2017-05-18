@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170518170422) do
 
   # These are extensions that must be enabled in order to support this database
@@ -149,6 +150,20 @@ ActiveRecord::Schema.define(version: 20170518170422) do
     t.string   "shopify_token",  :null=>false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "triggers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "emailSubject"
+    t.string   "emailContent"
+    t.integer  "num_times_triggered"
+    t.integer  "num_emails_sent"
+    t.integer  "delayTime"
+    t.datetime "created_at",          :null=>false
+    t.datetime "updated_at",          :null=>false
+    t.integer  "email_list_id",       :foreign_key=>{:references=>"email_lists", :name=>"fk_triggers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_email_list_id", :using=>:btree}
+    t.integer  "hook_id",             :foreign_key=>{:references=>"hooks", :name=>"fk_triggers_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_hook_id", :using=>:btree}
   end
 
 end
