@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517211836) do
+ActiveRecord::Schema.define(version: 20170518202231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,13 +38,19 @@ ActiveRecord::Schema.define(version: 20170517211836) do
   end
 
   create_table "campaigns", force: :cascade do |t|
-    t.integer  "hook_id",         :foreign_key=>{:references=>"hooks", :name=>"fk_campaigns_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_hook_id", :using=>:btree}
+    t.integer  "hook_id",           :foreign_key=>{:references=>"hooks", :name=>"fk_campaigns_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_hook_id", :using=>:btree}
     t.string   "name"
     t.string   "hook_identifier"
-    t.integer  "app_id",          :foreign_key=>{:references=>"apps", :name=>"fk_campaigns_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_app_id", :using=>:btree}
-    t.integer  "email_list_id",   :foreign_key=>{:references=>"email_lists", :name=>"fk_campaigns_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_email_list_id", :using=>:btree}
-    t.datetime "created_at",      :null=>false
-    t.datetime "updated_at",      :null=>false
+    t.integer  "app_id",            :foreign_key=>{:references=>"apps", :name=>"fk_campaigns_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_app_id", :using=>:btree}
+    t.integer  "email_list_id",     :foreign_key=>{:references=>"email_lists", :name=>"fk_campaigns_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_email_list_id", :using=>:btree}
+    t.datetime "created_at",        :null=>false
+    t.datetime "updated_at",        :null=>false
+    t.string   "description"
+    t.integer  "numTimesTriggered"
+    t.integer  "numEmailsSent"
+    t.integer  "delayTime"
+    t.string   "emailSubject"
+    t.string   "emailContent"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -96,6 +102,35 @@ ActiveRecord::Schema.define(version: 20170517211836) do
     t.datetime "updated_at", :null=>false
   end
 
+  create_table "email_messages", force: :cascade do |t|
+    t.string   "subject"
+    t.string   "content"
+    t.string   "from"
+    t.string   "to"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+  end
+
+  create_table "funnel_models", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "dateCreated"
+    t.integer  "numSubscribers"
+    t.integer  "numTriggers"
+    t.float    "numRevenue"
+    t.datetime "created_at",     :null=>false
+    t.datetime "updated_at",     :null=>false
+  end
+
+  create_table "funnels", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "numTriggers"
+    t.float    "numRevenue"
+    t.datetime "created_at",  :null=>false
+    t.datetime "updated_at",  :null=>false
+  end
+
   create_table "job_queues", force: :cascade do |t|
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
@@ -125,6 +160,8 @@ ActiveRecord::Schema.define(version: 20170517211836) do
     t.integer  "delayTime"
     t.datetime "created_at",          :null=>false
     t.datetime "updated_at",          :null=>false
+    t.integer  "email_list_id",       :foreign_key=>{:references=>"email_lists", :name=>"fk_triggers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_email_list_id", :using=>:btree}
+    t.integer  "hook_id",             :foreign_key=>{:references=>"hooks", :name=>"fk_triggers_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_hook_id", :using=>:btree}
   end
 
 end

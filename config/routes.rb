@@ -1,6 +1,7 @@
 MailFunnelServer::Application.routes.draw do
 
   resources :triggers
+  resources :funnels
   resources :campaign_product_leads
   resources :job_queues
   resources :campaigns do
@@ -10,6 +11,10 @@ MailFunnelServer::Application.routes.draw do
 	mount API => '/'
 
 	# http://localhost:3001/RESOURCE
+
+	resources :triggers
+
+	resources :funnels
 
 	resources :email_lists do
 		resources :emails

@@ -25,6 +25,10 @@ class API < Grape::API
 		def initvars
 			puts 'INITIALIZED CONSTRUCTOR'
 			Dotenv::Railtie.load
+			@app_url = ENV['APP_URL']
+			@app_name = ENV['APP_NAME']
+			@api_key = ENV['APP_KEY']
+			@secret = ENV['APP_SECRET']
 			@tokens   = {}
 			puts @tokens
 		end
@@ -134,7 +138,7 @@ class API < Grape::API
 
 		# construct the installation URL and redirect the merchant
 		install_url = "http://#{shop}/admin/oauth/authorize?client_id=#{app_secret}"\
-                "&scope=#{app_scope}&redirect_uri=#{app_url}auth"
+                "&scope=#{app_scope}&redirect_uri=#{app_url}/auth/shopify/callback"
 
 		# redirect to the install_url
 		redirect install_url
