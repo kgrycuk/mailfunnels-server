@@ -3,7 +3,10 @@ class TriggersController < ApplicationController
 
   # GET /triggers
   def index
-    @triggers = Trigger.all
+
+    if params.has_key? (:app_id)
+      @triggers = Trigger.where(app_id: params[:app_id])
+    end
 
     render json: @triggers
   end
@@ -46,6 +49,6 @@ class TriggersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def trigger_params
-      params.require(:trigger).permit(:name, :description, :emailSubject, :emailContent, :num_times_triggered, :num_emails_sent, :delayTime, :email_list_id, :hook_id)
+      params.require(:trigger).permit(:name, :description, :emailSubject, :emailContent, :num_times_triggered, :num_emails_sent, :delayTime, :email_list_id, :hook_id, :app_id)
     end
 end
