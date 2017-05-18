@@ -3,7 +3,12 @@ class FunnelsController < ApplicationController
 
   # GET /funnels
   def index
-    @funnels = Funnel.all
+
+    if params.has_key? (:app_id)
+      @funnels = Funnel.where(app_id: params[:app_id])
+    end
+
+    logger.info @funnels.to_json
 
     render json: @funnels
   end
@@ -46,6 +51,6 @@ class FunnelsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def funnel_params
-      params.require(:funnel).permit(:name, :description, :numTriggers, :numRevenue)
+      params.require(:funnel).permit(:name, :description, :numTriggers, :numRevenue, :app_id)
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517192301) do
+ActiveRecord::Schema.define(version: 20170518170422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20170517192301) do
     t.float    "numRevenue"
     t.datetime "created_at",  :null=>false
     t.datetime "updated_at",  :null=>false
+    t.integer  "app_id",      :foreign_key=>{:references=>"apps", :name=>"fk_funnels_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__funnels_app_id", :using=>:btree}
   end
 
   create_table "job_queues", force: :cascade do |t|
