@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518211411) do
+ActiveRecord::Schema.define(version: 20170519210109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,13 +144,6 @@ ActiveRecord::Schema.define(version: 20170518211411) do
     t.datetime "updated_at", :null=>false
   end
 
-  create_table "shops", force: :cascade do |t|
-    t.string   "shopify_domain", :null=>false, :index=>{:name=>"index_shops_on_shopify_domain", :unique=>true, :using=>:btree}
-    t.string   "shopify_token",  :null=>false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "triggers", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -164,6 +157,27 @@ ActiveRecord::Schema.define(version: 20170518211411) do
     t.integer  "email_list_id",       :foreign_key=>{:references=>"email_lists", :name=>"fk_triggers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_email_list_id", :using=>:btree}
     t.integer  "hook_id",             :foreign_key=>{:references=>"hooks", :name=>"fk_triggers_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_hook_id", :using=>:btree}
     t.integer  "app_id",              :foreign_key=>{:references=>"apps", :name=>"fk_triggers_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_app_id", :using=>:btree}
+  end
+
+  create_table "nodes", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "top"
+    t.integer  "left"
+    t.integer  "hits"
+    t.integer  "uhits"
+    t.integer  "nemails"
+    t.integer  "nesent"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+    t.integer  "funnel_id",  :foreign_key=>{:references=>"funnels", :name=>"fk_nodes_funnel_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_funnel_id", :using=>:btree}
+    t.integer  "trigger_id", :foreign_key=>{:references=>"triggers", :name=>"fk_nodes_trigger_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_trigger_id", :using=>:btree}
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string   "shopify_domain", :null=>false, :index=>{:name=>"index_shops_on_shopify_domain", :unique=>true, :using=>:btree}
+    t.string   "shopify_token",  :null=>false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

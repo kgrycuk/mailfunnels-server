@@ -3,4 +3,5 @@ class Funnel < ApplicationRecord
   validates :description, presence: true
 
   belongs_to :app
+  has_many :nodes
 end
