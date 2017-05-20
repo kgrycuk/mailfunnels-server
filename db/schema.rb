@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519210109) do
+ActiveRecord::Schema.define(version: 20170520190138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,17 +111,6 @@ ActiveRecord::Schema.define(version: 20170519210109) do
     t.datetime "updated_at", :null=>false
   end
 
-  create_table "funnel_models", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "dateCreated"
-    t.integer  "numSubscribers"
-    t.integer  "numTriggers"
-    t.float    "numRevenue"
-    t.datetime "created_at",     :null=>false
-    t.datetime "updated_at",     :null=>false
-  end
-
   create_table "funnels", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -137,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170519210109) do
     t.datetime "updated_at", :null=>false
   end
 
+
   create_table "mail_funnel_server_configs", force: :cascade do |t|
     t.string   "name"
     t.string   "value"
@@ -147,11 +137,11 @@ ActiveRecord::Schema.define(version: 20170519210109) do
   create_table "triggers", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "emailSubject"
-    t.string   "emailContent"
-    t.integer  "num_times_triggered"
-    t.integer  "num_emails_sent"
-    t.integer  "delayTime"
+    t.string   "esubject"
+    t.string   "econtent"
+    t.integer  "ntriggered"
+    t.integer  "nesent"
+    t.integer  "delayt"
     t.datetime "created_at",          :null=>false
     t.datetime "updated_at",          :null=>false
     t.integer  "email_list_id",       :foreign_key=>{:references=>"email_lists", :name=>"fk_triggers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__triggers_email_list_id", :using=>:btree}
@@ -171,6 +161,15 @@ ActiveRecord::Schema.define(version: 20170519210109) do
     t.datetime "updated_at", :null=>false
     t.integer  "funnel_id",  :foreign_key=>{:references=>"funnels", :name=>"fk_nodes_funnel_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_funnel_id", :using=>:btree}
     t.integer  "trigger_id", :foreign_key=>{:references=>"triggers", :name=>"fk_nodes_trigger_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_trigger_id", :using=>:btree}
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+    t.integer  "slink"
+    t.integer  "funnel_id",  :foreign_key=>{:references=>"funnels", :name=>"fk_links_funnel_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_funnel_id", :using=>:btree}
+    t.integer  "fni", :foreign_key=>{:references=>"nodes", :name=>"fk_links_from_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_from_node_id", :using=>:btree}
+    t.integer  "tni", :foreign_key=>{:references=>"nodes", :name=>"fk_links_to_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_to_node_id", :using=>:btree}
   end
 
   create_table "shops", force: :cascade do |t|

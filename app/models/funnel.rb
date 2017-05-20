@@ -4,4 +4,6 @@ class Funnel < ApplicationRecord
 
   belongs_to :app
   has_many :nodes
+  has_many :links
+
 end

@@ -1,5 +1,6 @@
 MailFunnelServer::Application.routes.draw do
 
+  resources :links
   resources :nodes
   resources :triggers
   resources :funnels
