@@ -37,21 +37,6 @@ ActiveRecord::Schema.define(version: 20170520190138) do
     t.datetime "updated_at", :null=>false
   end
 
-  create_table "campaigns", force: :cascade do |t|
-    t.integer  "hook_id",           :foreign_key=>{:references=>"hooks", :name=>"fk_campaigns_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_hook_id", :using=>:btree}
-    t.string   "name"
-    t.string   "hook_identifier"
-    t.integer  "app_id",            :foreign_key=>{:references=>"apps", :name=>"fk_campaigns_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_app_id", :using=>:btree}
-    t.integer  "email_list_id",     :foreign_key=>{:references=>"email_lists", :name=>"fk_campaigns_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaigns_email_list_id", :using=>:btree}
-    t.datetime "created_at",        :null=>false
-    t.datetime "updated_at",        :null=>false
-    t.string   "description"
-    t.integer  "numTimesTriggered"
-    t.integer  "numEmailsSent"
-    t.integer  "delayTime"
-    t.string   "emailSubject"
-    t.string   "emailContent"
-  end
 
   create_table "emails", force: :cascade do |t|
     t.string   "email_address"
@@ -60,25 +45,6 @@ ActiveRecord::Schema.define(version: 20170520190138) do
     t.datetime "updated_at",    :null=>false
     t.integer  "app_id",        :foreign_key=>{:references=>"apps", :name=>"fk_emails_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__emails_app_id", :using=>:btree}
     t.integer  "email_list_id", :foreign_key=>{:references=>"email_lists", :name=>"fk_emails_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__emails_email_list_id", :using=>:btree}
-  end
-
-  create_table "jobs", force: :cascade do |t|
-    t.string   "subject"
-    t.text     "content"
-    t.datetime "created_at",        :null=>false
-    t.datetime "updated_at",        :null=>false
-    t.integer  "email_list_id",     :foreign_key=>{:references=>"email_lists", :name=>"fk_jobs_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__jobs_email_list_id", :using=>:btree}
-    t.integer  "app_id",            :foreign_key=>{:references=>"apps", :name=>"fk_jobs_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__jobs_app_id", :using=>:btree}
-    t.boolean  "executed"
-    t.integer  "execute_time"
-    t.string   "hook_identifier"
-    t.string   "execute_frequency"
-    t.string   "name"
-    t.integer  "hook_id",           :foreign_key=>{:references=>"hooks", :name=>"fk_jobs_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__jobs_hook_id", :using=>:btree}
-    t.integer  "campaign_id",       :foreign_key=>{:references=>"campaigns", :name=>"fk_jobs_campaign_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__jobs_campaign_id", :using=>:btree}
-    t.datetime "execute_date"
-    t.string   "queue_identifier"
-    t.datetime "execute_set_time"
   end
 
   create_table "campaign_product_leads", force: :cascade do |t|
@@ -95,22 +61,6 @@ ActiveRecord::Schema.define(version: 20170520190138) do
     t.string   "Source"
   end
 
-  create_table "configs", force: :cascade do |t|
-    t.string   "name"
-    t.string   "value"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
-  end
-
-  create_table "email_messages", force: :cascade do |t|
-    t.string   "subject"
-    t.string   "content"
-    t.string   "from"
-    t.string   "to"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
-  end
-
   create_table "funnels", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -120,12 +70,6 @@ ActiveRecord::Schema.define(version: 20170520190138) do
     t.datetime "updated_at",  :null=>false
     t.integer  "app_id",      :foreign_key=>{:references=>"apps", :name=>"fk_funnels_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__funnels_app_id", :using=>:btree}
   end
-
-  create_table "job_queues", force: :cascade do |t|
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
-  end
-
 
   create_table "mail_funnel_server_configs", force: :cascade do |t|
     t.string   "name"
