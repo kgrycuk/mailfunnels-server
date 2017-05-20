@@ -50,8 +50,6 @@ ActiveRecord::Schema.define(version: 20170520190138) do
   create_table "campaign_product_leads", force: :cascade do |t|
     t.integer  "app_id",             :foreign_key=>{:references=>"apps", :name=>"fk_campaign_product_leads_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaign_product_leads_app_id", :using=>:btree}
     t.integer  "product_identifier"
-    t.integer  "campaign_id",        :foreign_key=>{:references=>"campaigns", :name=>"fk_campaign_product_leads_campaign_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaign_product_leads_campaign_id", :using=>:btree}
-    t.integer  "job_id",             :foreign_key=>{:references=>"jobs", :name=>"fk_campaign_product_leads_job_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaign_product_leads_job_id", :using=>:btree}
     t.boolean  "sold",               :default=>false
     t.decimal  "sale_ammount",       :default=>"0.0"
     t.integer  "email_list_id",      :foreign_key=>{:references=>"email_lists", :name=>"fk_campaign_product_leads_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__campaign_product_leads_email_list_id", :using=>:btree}
