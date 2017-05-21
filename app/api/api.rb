@@ -124,6 +124,9 @@ class API < Grape::API
 	# STEP #1
 	# http://localhost:3001/API/install
 	get :install do
+
+   puts "BEFORE INITVAR()"
+
 		initvars()
 
 		add_app(params[:shop])
