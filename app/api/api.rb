@@ -368,31 +368,57 @@ class API < Grape::API
 	# 	end
 	# end
 
-  resource :apps do
+	resource :apps do
 
-		get do
+    get do
 			App.all
 		end
 
 		params do
-			requires :id, type: Integer, desc: 'funnel id.'
+			requires :name, type: String, desc: 'app name'
+			requires :auth_token, type: String, desc: 'app auth_token'
+		end
+		post do
+			App.create!({
+												 name: params[:name],
+												 auth_token: params[:auth_token]
+										 })
+		end
+
+		params do
+			requires :id, type: Integer, desc: 'node id.'
 		end
 		route_param :id do
 			get do
 				App.find(params[:id])
 			end
 		end
-  end
+	end
 
-  resource :email_lists do
+	resource :email_lists do
 
 		get do
 			EmailList.all
 		end
 
 		params do
-			requires :id, type: Integer, desc: 'funnel id.'
+			requires :name, type: String, desc: 'app name'
+			requires :description, type: String, desc: 'funnel description'
+			requires :app_id, type: Integer, desc: 'funnel app_id'
+    end
+
+		post do
+			EmailList.create!({
+											name: params[:name],
+											description: params[:description],
+											app_id: params[:app_id]
+									})
 		end
+
+		params do
+			requires :id, type: Integer, desc: 'node id.'
+    end
+
 		route_param :id do
 			get do
 				EmailList.find(params[:id])
@@ -417,6 +443,29 @@ class API < Grape::API
 
   end
 
+	resource :emails do
+
+		get do
+			Email.all
+    end
+
+		params do
+			requires :email_address, type: String, desc: 'email address'
+			requires :name, type: String, desc: 'email name'
+			requires :app_id, type: Integer, desc: 'email app_id'
+			requires :email_list_id, type: Integer, desc: 'email list id'
+		end
+		post do
+			Email.create!({
+												email_address: params[:email_address],
+                        name: params[:name],
+                        app_id: params[:app_id],
+      									email_list_id: params[:email_list_id],
+                    })
+		end
+
+	end
+
 	resource :funnels do
 
     get do
@@ -430,7 +479,23 @@ class API < Grape::API
 			get do
 				Funnel.find(params[:id])
 			end
+    end
+
+		desc 'Create a Funnel'
+		params do
+			requires :name, type: String, desc: 'funnel name'
+			requires :description, type: String, desc: 'funnel description'
+			requires :app_id, type: Integer, desc: 'funnel app_id'
+    end
+		post do
+			Funnel.create!({
+												 name: params[:name],
+												 description: params[:description],
+												 app_id: params[:app_id]
+										 })
 		end
+
+
 	end
 
 	resource :triggers do
@@ -446,7 +511,37 @@ class API < Grape::API
 			get do
 				Trigger.find(params[:id])
 			end
+    end
+
+		desc 'Create a Trigger'
+		# params do
+		# 	requires :name, type: String, desc: 'Trigger name'
+		# 	requires :description, type: String, desc: 'Trigger description'
+		# 	requires :app_id, type: Integer, desc: 'Trigger app_id'
+     #  requires :econtent , type: String, desc: 'Trigger content'
+     #  requires :email_list_id, type: String, desc: 'Trigger email list id'
+     #  requires :hook_id, type: String, desc: 'Trigger hook id'
+     #  requires :ntriggered, type: String, desc: 'Trigger triggered'
+     #  requires :nesent, type: String, desc: 'Trigger sent'
+     #  requires :delayt, type: String, desc: 'Trigger delayt'
+		# end
+		post do
+			 Trigger.create! params
+      # ({
+			# 									 name: params[:name],
+			# 									 description: params[:description],
+			# 									 app_id: params[:app_id],
+			# 									 esubject: params[:esubject],
+			# 									 econtent: params[:econtent],
+			# 									 email_list_id: params[:email_list_id],
+			# 									 hook_id:params[:hook_id],
+			# 									 ntriggered: params[:ntriggered],
+			# 									 nesent: params[:nesent],
+			# 									 delayt: params[:delayt]
+			# 							 })
 		end
+
+
 	end
 
 	resource :links do
