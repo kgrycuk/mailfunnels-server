@@ -349,4 +349,68 @@ class API < Grape::API
 	# 		end
 	# 	end
 	# end
+
+	resource :funnels do
+
+    get do
+			Funnel.all
+    end
+
+		params do
+			requires :id, type: Integer, desc: 'funnel id.'
+		end
+		route_param :id do
+			get do
+				Funnel.find(params[:id])
+			end
+		end
+	end
+
+	resource :triggers do
+
+    get do
+      Trigger.all
+    end
+
+		params do
+			requires :id, type: Integer, desc: 'trigger id.'
+		end
+		route_param :id do
+			get do
+				Trigger.find(params[:id])
+			end
+		end
+	end
+
+	resource :links do
+
+		get do
+			Link.all
+    end
+
+		params do
+			requires :id, type: Integer, desc: 'link id.'
+		end
+		route_param :id do
+			get do
+				Link.find(params[:id])
+			end
+		end
+	end
+
+	resource :nodes do
+
+		get do
+			Node.all
+		end
+
+		params do
+			requires :id, type: Integer, desc: 'node id.'
+		end
+		route_param :id do
+			get do
+				Node.find(params[:id])
+			end
+		end
+	end
 end
