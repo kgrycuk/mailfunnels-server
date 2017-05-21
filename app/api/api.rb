@@ -353,6 +353,55 @@ class API < Grape::API
 	# 	end
 	# end
 
+  resource :apps do
+
+		get do
+			App.all
+		end
+
+		params do
+			requires :id, type: Integer, desc: 'funnel id.'
+		end
+		route_param :id do
+			get do
+				App.find(params[:id])
+			end
+		end
+  end
+
+  resource :email_lists do
+
+		get do
+			EmailList.all
+		end
+
+		params do
+			requires :id, type: Integer, desc: 'funnel id.'
+		end
+		route_param :id do
+			get do
+				EmailList.find(params[:id])
+			end
+		end
+  end
+
+  resource :hooks do
+
+		get do
+			Hook.all
+		end
+
+		params do
+			requires :id, type: Integer, desc: 'funnel id.'
+		end
+		route_param :id do
+			get do
+				Hook.find(params[:id])
+			end
+		end
+
+  end
+
 	resource :funnels do
 
     get do
