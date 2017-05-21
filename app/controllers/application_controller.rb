@@ -4,4 +4,7 @@ class ApplicationController < ActionController::API
 	# TODO Security - Secure API Controllers from forgery with :null_session
 
   # protect_from_forgery with: :exception
+
+
+
 end
