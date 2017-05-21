@@ -19,11 +19,11 @@ class MailfunnelsUtil
   end
 
   def self.get_app_id
-    return App.where(name: BluehelmetUtil.get_app_name).first.id
+    return App.where(name: MailfunnelsUtil.get_app_name).first.id
   end
 
   def self.get_app
-    return App.where(name: BluehelmetUtil.get_app_name).first
+    return App.where(name: MailfunnelsUtil.get_app_name).first
   end
 
 end
