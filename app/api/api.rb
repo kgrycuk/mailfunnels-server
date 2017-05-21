@@ -115,7 +115,22 @@ class API < Grape::API
 		end
 
 		def add_app(name)
-			App.find_or_create_by(name: name)
+
+			app_create = App.where(name: name) # bluehelmet-dev.myshopifyapp.com
+
+			if app_create.empty?
+				puts "Creating App + " + name
+				digest = OpenSSL::Digest.new('sha256')
+				token = Base64.encode64(OpenSSL::HMAC.digest(digest, ENV['SECRET_KEY_BASE'], name)).strip
+				app_create = App.create(name: name, auth_token: token)
+				app        = app_create
+				puts "App did not exist, created with id: " + app.id.to_s
+			else
+				puts "Blue Helmet Dev App already exists " +  app_create.id
+				app = app_create.first
+				puts "App exists already, id: " + app.id.to_s
+			end
+
 		end
 	end
 
@@ -125,7 +140,7 @@ class API < Grape::API
 	# http://localhost:3001/API/install
 	get :install do
 
-   puts "BEFORE INITVAR()"
+   puts "kjhkhhhhlkjhkljhkjhkjhkjhkjhkjhlkhklj1"
 
 		initvars()
 
