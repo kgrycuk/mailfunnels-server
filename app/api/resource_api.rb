@@ -69,8 +69,11 @@ class ResourceApi < Grape::API
     # creates new Hook
     # POST /hooks
     post do
+      puts params
       Hook.create! params
     end
+
+
 
   end
 
@@ -209,6 +212,13 @@ class ResourceApi < Grape::API
     # POST /nodes
     post do
       Node.create! params
+    end
+
+    params do
+      requires :id, type: String, desc: 'Status ID.'
+    end
+    put ':id' do
+      Node.find(params[:id]).save params
     end
 
   end
