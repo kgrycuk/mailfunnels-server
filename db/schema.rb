@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522182231) do
+ActiveRecord::Schema.define(version: 20170522183235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,31 @@ ActiveRecord::Schema.define(version: 20170522182231) do
     t.string   "Source"
   end
 
+  create_table "hooks", force: :cascade do |t|
+    t.text     "name"
+    t.text     "identifier"
+    t.datetime "created_at", :null=>false
+    t.datetime "updated_at", :null=>false
+  end
+
+  create_table "subscribers", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.integer  "app_id",        :foreign_key=>{:references=>"apps", :name=>"fk_subscribers_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__subscribers_app_id", :using=>:btree}
+    t.integer  "email_list_id", :foreign_key=>{:references=>"email_lists", :name=>"fk_subscribers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__subscribers_email_list_id", :using=>:btree}
+    t.datetime "created_at",    :null=>false
+    t.datetime "updated_at",    :null=>false
+  end
+
+  create_table "captured_hooks", force: :cascade do |t|
+    t.integer  "hook_id",       :foreign_key=>{:references=>"hooks", :name=>"fk_captured_hooks_hook_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__captured_hooks_hook_id", :using=>:btree}
+    t.integer  "subscriber_id", :foreign_key=>{:references=>"subscribers", :name=>"fk_captured_hooks_subscriber_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__captured_hooks_subscriber_id", :using=>:btree}
+    t.integer  "app_id",        :foreign_key=>{:references=>"apps", :name=>"fk_captured_hooks_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__captured_hooks_app_id", :using=>:btree}
+    t.datetime "created_at",    :null=>false
+    t.datetime "updated_at",    :null=>false
+  end
+
   create_table "email_templates", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -59,13 +84,6 @@ ActiveRecord::Schema.define(version: 20170522182231) do
     t.datetime "created_at",  :null=>false
     t.datetime "updated_at",  :null=>false
     t.integer  "app_id",      :foreign_key=>{:references=>"apps", :name=>"fk_funnels_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__funnels_app_id", :using=>:btree}
-  end
-
-  create_table "hooks", force: :cascade do |t|
-    t.text     "name"
-    t.text     "identifier"
-    t.datetime "created_at", :null=>false
-    t.datetime "updated_at", :null=>false
   end
 
   create_table "triggers", force: :cascade do |t|
@@ -118,16 +136,6 @@ ActiveRecord::Schema.define(version: 20170522182231) do
     t.string   "shopify_token",  :null=>false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "subscribers", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.integer  "app_id",        :foreign_key=>{:references=>"apps", :name=>"fk_subscribers_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__subscribers_app_id", :using=>:btree}
-    t.integer  "email_list_id", :foreign_key=>{:references=>"email_lists", :name=>"fk_subscribers_email_list_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__subscribers_email_list_id", :using=>:btree}
-    t.datetime "created_at",    :null=>false
-    t.datetime "updated_at",    :null=>false
   end
 
 end

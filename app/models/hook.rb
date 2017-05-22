@@ -1,3 +1,3 @@
 class Hook < ApplicationRecord
-	has_many :jobs
+	has_many :captured_hooks
 end

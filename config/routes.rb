@@ -1,4 +1,5 @@
 MailFunnelServer::Application.routes.draw do
+  resources :captured_hooks
   resources :email_templates
   resources :email_lists
   resources :subscribers
