@@ -426,6 +426,25 @@ class API < Grape::API
 		end
   end
 
+  # EmailTemplate Resource API
+  # --------------------------
+  resource :email_templates do
+
+    # Get /email_templates
+    # Gets all email_templates
+    get do
+      EmailTemplate.all
+    end
+
+    route_param :id do
+      get do
+        EmailTemplate.find(params[:id])
+      end
+    end
+
+  end
+
+
 
   # Hooks Resource API
   # ------------------
@@ -443,6 +462,26 @@ class API < Grape::API
 				Hook.find(params[:id])
 			end
 		end
+
+  end
+
+  # CapturedHooks Resource API
+  # --------------------------
+  resource :captured_hooks do
+
+    # GET /captured_hooks
+    # Gets all CapturedHook Instances
+    get do
+      CapturedHook.all
+    end
+
+    # GET /captured_hooks/:id
+    # Returns a single CapturedHook Instance
+    route_param :id do
+      get do
+        CapturedHook.find(params[:id])
+      end
+    end
 
   end
 
