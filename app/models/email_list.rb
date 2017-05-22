@@ -1,6 +1,7 @@
 class EmailList < ApplicationRecord
-	validates :name, presence: true
+  validates :name, presence: true
 
-	belongs_to :app
-	has_many :emails
+  belongs_to :app, :class_name => 'App', :foreign_key => 'app_id'
+
+  has_many :subscribers
 end

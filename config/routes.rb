@@ -1,4 +1,6 @@
 MailFunnelServer::Application.routes.draw do
+  resources :email_lists
+  resources :subscribers
   # http://localhost:3001/API/
 	mount API => '/'
 

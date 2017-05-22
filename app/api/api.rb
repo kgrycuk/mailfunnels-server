@@ -342,32 +342,9 @@ class API < Grape::API
 	# REST API
 	# URL Schema http://localhost:3000/api/jobs/all'
 
-	resource :job_queue do
 
-		desc 'Return Pending jobs in Resque Job queue for Job ID.'
-		params do
-			requires :id, type: Integer, desc: 'Job ID'
-		end
-		route_param :id do
-			get do
-				Status.find(params[:id])
-			end
-		end
-
-	end
-
-	# resource :email_lists do
-	# 	desc 'Returns Email-Lists for an App'
-	# 	params do
-	# 		requires :id, type: Integer, desc: 'Shopify ID'
-	# 	end
-	# 	route_param :id do
-	# 		get do
-	# 			EmailList.where(app_id: params[:id])
-	# 		end
-	# 	end
-	# end
-
+  # Apps Resource API
+  # -----------------
 	resource :apps do
 
     get do
@@ -393,8 +370,31 @@ class API < Grape::API
 				App.find(params[:id])
 			end
 		end
-	end
+  end
 
+
+  # Subscriber Resource API
+  # ------------------------
+  resource :subscribers do
+    get do
+      Subscriber.all
+    end
+
+    params do
+      requires :email, type: String, desc: 'Email Address'
+      requires :app_id, type: Integer, desc: 'App ID'
+    end
+
+    route_param :id do
+      get do
+        Subscriber.find(params[:id])
+      end
+    end
+  end
+
+
+  # EmailList Resource API
+  # ----------------------
 	resource :email_lists do
 
 		get do
@@ -426,6 +426,9 @@ class API < Grape::API
 		end
   end
 
+
+  # Hooks Resource API
+  # ------------------
   resource :hooks do
 
 		get do
@@ -443,29 +446,9 @@ class API < Grape::API
 
   end
 
-	resource :emails do
 
-		get do
-			Email.all
-    end
-
-		params do
-			requires :email_address, type: String, desc: 'email address'
-			requires :name, type: String, desc: 'email name'
-			requires :app_id, type: Integer, desc: 'email app_id'
-			requires :email_list_id, type: Integer, desc: 'email list id'
-		end
-		post do
-			Email.create!({
-												email_address: params[:email_address],
-                        name: params[:name],
-                        app_id: params[:app_id],
-      									email_list_id: params[:email_list_id],
-                    })
-		end
-
-	end
-
+  # Funnels Resource API
+  # --------------------
 	resource :funnels do
 
     get do
@@ -498,6 +481,9 @@ class API < Grape::API
 
 	end
 
+
+  # Triggers Resource API
+  # ---------------------
 	resource :triggers do
 
     get do
@@ -544,6 +530,8 @@ class API < Grape::API
 
 	end
 
+  # Links Resource API
+  # ------------------
 	resource :links do
 
 		get do
@@ -560,6 +548,9 @@ class API < Grape::API
 		end
 	end
 
+
+  # Nodes Resource API
+  # ------------------
 	resource :nodes do
 
 		get do
