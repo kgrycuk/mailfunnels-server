@@ -218,7 +218,7 @@ class ResourceApi < Grape::API
       requires :id, type: String, desc: 'Status ID.'
     end
     put ':id' do
-      Node.find(params[:id]).save params
+      Node.find(params[:id]).update params
     end
 
   end
