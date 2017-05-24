@@ -46,6 +46,6 @@ class LinksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def link_params
-      params.require(:link).permit(:slink, :funnel_id, :fni, :tni)
+      params.require(:link).permit(:start_link, :funnel_id, :from_node_id, :to_node_id)
     end
 end

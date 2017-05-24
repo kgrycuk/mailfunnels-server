@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 20170522183235) do
     t.integer  "left"
     t.integer  "num_emails"
     t.integer  "num_emails_sent"
+    t.integer  "num_emails_opened"
+    t.integer  "num_emails_clicked"
     t.decimal  "num_revenue"
     t.integer  "delay_time"
     t.datetime "created_at", :null=>false
@@ -120,10 +122,10 @@ ActiveRecord::Schema.define(version: 20170522183235) do
   create_table "links", force: :cascade do |t|
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
-    t.integer  "slink"
+    t.integer  "start_link"
     t.integer  "funnel_id",  :foreign_key=>{:references=>"funnels", :name=>"fk_links_funnel_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_funnel_id", :using=>:btree}
-    t.integer  "fni",        :foreign_key=>{:references=>"nodes", :name=>"fk_links_from_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_from_node_id", :using=>:btree}
-    t.integer  "tni",        :foreign_key=>{:references=>"nodes", :name=>"fk_links_to_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_to_node_id", :using=>:btree}
+    t.integer  "from_node_id",        :foreign_key=>{:references=>"nodes", :name=>"fk_links_from_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_from_node_id", :using=>:btree}
+    t.integer  "to_node_id",        :foreign_key=>{:references=>"nodes", :name=>"fk_links_to_node_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__links_to_node_id", :using=>:btree}
   end
 
   create_table "mail_funnel_server_configs", force: :cascade do |t|
