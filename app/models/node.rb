@@ -1,7 +1,7 @@
 class Node < ApplicationRecord
 
   belongs_to :funnel, :class_name => 'Funnel', :foreign_key => 'funnel_id'
-  belongs_to :trigger, :class_name => 'Trigger', :foreign_key => 'trigger_id'
+  belongs_to :email_template, :class_name => 'EmailTemplate', :foreign_key => 'email_template_id'
 
   has_many :links
 
