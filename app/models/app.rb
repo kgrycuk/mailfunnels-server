@@ -5,6 +5,7 @@ class App < ApplicationRecord
 	has_many :email_lists
 	has_many :subscribers
 	has_many :funnels
+	has_many :nodes
 	has_many :triggers
 	has_many :captured_hooks
 

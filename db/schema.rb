@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20170522183235) do
     t.integer  "delay_time"
     t.datetime "created_at", :null=>false
     t.datetime "updated_at", :null=>false
+    t.integer  "app_id",      :foreign_key=>{:references=>"apps", :name=>"fk_nodes_app_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_app_id", :using=>:btree}
     t.integer  "funnel_id",  :foreign_key=>{:references=>"funnels", :name=>"fk_nodes_funnel_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_funnel_id", :using=>:btree}
     t.integer  "email_template_id",  :foreign_key=>{:references=>"email_templates", :name=>"fk_nodes_email_template_id", :on_update=>:no_action, :on_delete=>:no_action}, :index=>{:name=>"fk__nodes_email_template_id", :using=>:btree}
   end
