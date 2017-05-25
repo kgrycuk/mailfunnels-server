@@ -12,7 +12,9 @@ class ResourceApi < Grape::API
     # Get Routes
     # ----------------
     get do
-      if params[:id]
+      if params[:name]
+        App.where(name: params[:name])
+      elsif
         App.find(params[:id])
       else
         error!('Resource not found', 404)
