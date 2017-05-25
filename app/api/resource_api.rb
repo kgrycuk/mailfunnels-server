@@ -90,6 +90,14 @@ class ResourceApi < Grape::API
     end
 
 
+    # GET funnels/:funnel_id
+    route_param :funnel_id do
+      get do
+        EmailTemplate.find(params[:funnel_id])
+      end
+    end
+
+
     # Post/Put Routes
     # ----------------
     post do
@@ -155,6 +163,8 @@ class ResourceApi < Grape::API
         Link.find(params[:id])
       elsif params[:app_id]
         Link.where(app_id: params[:app_id])
+      elsif params[:funnel_id]
+        Link.where(funnel_id: params[:funnel_id])
       else
         error!('Resource not found', 404)
       end
@@ -188,8 +198,17 @@ class ResourceApi < Grape::API
         Node.find(params[:id])
       elsif params[:app_id]
         Node.where(app_id: params[:app_id])
+      elsif params[:funnel_id]
+        Node.where(funnel_id: params[:funnel_id])
       else
         error!('Resource not found', 404)
+      end
+    end
+
+
+    route_param :id do
+      get do
+        Node.find(params[:id])
       end
     end
 
@@ -205,7 +224,7 @@ class ResourceApi < Grape::API
     end
 
     put do
-      Node.save params
+      Node.save! params
     end
 
   end
@@ -252,6 +271,12 @@ class ResourceApi < Grape::API
         EmailTemplate.where(app_id: params[:app_id])
       else
         error!('Resource not found', 404)
+      end
+    end
+
+    route_param :template_id do
+      get do
+        EmailTemplate.find(params[:template_id])
       end
     end
 
