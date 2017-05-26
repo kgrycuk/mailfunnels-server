@@ -93,7 +93,7 @@ class ResourceApi < Grape::API
     # GET funnels/:funnel_id
     route_param :funnel_id do
       get do
-        EmailTemplate.find(params[:funnel_id])
+        Funnel.find(params[:funnel_id])
       end
     end
 
