@@ -339,6 +339,8 @@ class ResourceApi < Grape::API
         Subscriber.find(params[:id])
       elsif params[:app_id]
         Subscriber.where(app_id: params[:app_id])
+      elsif params[:email_list_id]
+        Subscriber.where(email_list_id: params[:email_list_id])
       else
         error!('Resource not found', 404)
       end
