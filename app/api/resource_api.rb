@@ -372,4 +372,38 @@ class ResourceApi < Grape::API
     end
   end
 
+  # EmailListSubscriber Resource API
+  # ------------------------
+  resource :email_list_subscribers do
+    # Get Routes
+    # ----------------
+    get do
+      if params[:id]
+        EmailListSubscriber.find(params[:id])
+      elsif params[:app_id]
+        EmailListSubscriber.where(app_id: params[:app_id])
+      elsif params[:email_list_id]
+        EmailListSubscriber.where(email_list_id: params[:email_list_id])
+      elsif params[:subscriber_id]
+        EmailListSubscriber.where(subscriber_id: params[:subscriber_id])
+      else
+        error!('Resource not found', 404)
+      end
+    end
+
+    # Post/Put Routes
+    # ----------------
+    post do
+      EmailListSubscriber.create! params
+    end
+
+    put ':id' do
+      EmailListSubscriber.find(params[:id]).save params
+    end
+
+    put do
+      EmailListSubscriber.save params
+    end
+  end
+
 end
