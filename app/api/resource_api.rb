@@ -46,9 +46,14 @@ class ResourceApi < Grape::API
     # ----------------
 
     get do
-      if params[:id]
+      if params[:identifier]
+        puts "Looking for hook with identifier"
+        Hook.where(identifier: params[:identifier])
+      elsif params[:id]
+        puts "Looking for hook with id"
         Hook.find(params[:id])
       elsif params[:app_id]
+        puts "Looking for hook with app_id"
         Hook.where(app_id: params[:app_id])
       else
         Hook.all
@@ -80,13 +85,16 @@ class ResourceApi < Grape::API
     # Get Routes
     # ----------------
     get do
-      if params[:id]
-        Funnel.find(params[:id])
-      elsif params[:app_id]
-        Funnel.where(app_id: params[:app_id])
-      else
-        error!('Resource not found', 404)
-      end
+      Funnel.where(params)
+
+
+      # if params[:id]
+      #   Funnel.find(params[:id])
+      # elsif params[:app_id]
+      #   Funnel.where(app_id: params[:app_id])
+      # else
+      #   error!('Resource not found', 404)
+      # end
     end
 
 
@@ -123,13 +131,15 @@ class ResourceApi < Grape::API
     # ----------------
 
     get do
-      if params[:id]
-        Trigger.find(params[:id])
-      elsif params[:app_id]
-        Trigger.where(app_id: params[:app_id])
-      else
-        error!('Resource not found', 404)
-      end
+      Trigger.where(params)
+
+      # if params[:id]
+      #   Trigger.find(params[:id])
+      # elsif params[:app_id]
+      #   Trigger.where(app_id: params[:app_id])
+      # else
+      #   error!('Resource not found', 404)
+      # end
     end
 
 
@@ -159,15 +169,16 @@ class ResourceApi < Grape::API
     # ----------------
 
     get do
-      if params[:id]
-        Link.find(params[:id])
-      elsif params[:app_id]
-        Link.where(app_id: params[:app_id])
-      elsif params[:funnel_id]
-        Link.where(funnel_id: params[:funnel_id])
-      else
-        error!('Resource not found', 404)
-      end
+      Link.where(params)
+      # if params[:id]
+      #   Link.find(params[:id])
+      # elsif params[:app_id]
+      #   Link.where(app_id: params[:app_id])
+      # elsif params[:funnel_id]
+      #   Link.where(funnel_id: params[:funnel_id])
+      # else
+      #   error!('Resource not found', 404)
+      # end
     end
 
     # Post/Put Routes
